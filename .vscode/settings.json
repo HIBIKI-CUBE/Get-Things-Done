@@ -45,5 +45,7 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+
+  "stylelint.validate": ["scss", "svelte"]
 }
