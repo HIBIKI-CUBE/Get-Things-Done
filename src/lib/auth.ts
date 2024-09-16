@@ -7,4 +7,5 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
   providers: [PassKey],
   adapter: PrismaAdapter(prisma),
   experimental: { enableWebAuthn: true },
+  trustHost: true,
 })
