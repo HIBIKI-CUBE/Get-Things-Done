@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id      String    @id @default(cuid())
+  image   String?
+  name    String?
+  Passkey Passkey[]
+  Session Session[]
+}
+
+model Session {
+  id         String    @id
+  expires    DateTime? @db.Timestamptz(6)
+  created_at DateTime  @default(now()) @db.Timestamptz(6)
+  cookie     String
+  user_id    String?
+  challenge  String?
+  User       User?     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Passkey {
+  id               String    @id
+  public_key       Bytes
+  user_id          String
+  webauthn_user_id String    @unique
+  counter          Decimal   @db.Decimal
+  device_type      String    @db.VarChar
+  backed_up        Boolean
+  transports       String?   @db.VarChar
+  created_at       DateTime? @default(now()) @db.Timestamptz(6)
+  User             User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
