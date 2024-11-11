@@ -5,6 +5,8 @@ node_modules
 .vercel
 /.svelte-kit
 /build
+.cloudflare
+.wrangler
 
 # OS
 .DS_Store
@@ -15,6 +17,7 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+.dev.*
 
 # Vite
 vite.config.js.timestamp-*

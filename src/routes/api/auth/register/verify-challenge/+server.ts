@@ -3,7 +3,6 @@ import type { RequestHandler } from './$types';
 import { Buffer } from 'node:buffer';
 import { prisma } from '$lib/prisma';
 import { origin, rpID } from '$lib/server/webAuthnConsts';
-import { Prisma } from '@prisma/client';
 import { verifyRegistrationResponse } from '@simplewebauthn/server';
 import { json } from '@sveltejs/kit';
 
@@ -53,7 +52,7 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
         webauthn_user_id: user.id,
         id: credential.id,
         public_key: Buffer.from(credential.publicKey),
-        counter: new Prisma.Decimal(credential.counter),
+        counter: credential.counter,
         transports: credential.transports?.join(',') ?? null,
         device_type: credentialDeviceType,
         backed_up: credentialBackedUp,
