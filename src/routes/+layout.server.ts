@@ -1,15 +1,18 @@
-import type { LayoutServerLoad } from './$types'
+import type { LayoutServerLoad } from './$types';
 import { prisma } from '$lib/prisma';
 
 export const load: LayoutServerLoad = async ({ locals: { session } }) => {
-  const user = (await prisma.session.findUnique({
+  const { userId } = session.data;
+  if (!userId) {
+    return {
+      user: undefined,
+    };
+  }
+  const user = await prisma.user.findUnique({
     where: {
-      id: session.id,
+      id: session.data.userId,
     },
-    include: {
-      User: true,
-    },
-  }))?.User;
+  });
 
   return {
     user: user ?? undefined,
