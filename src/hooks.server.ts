@@ -1,6 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
 import { SESSION_SECRET } from '$env/static/private';
-import PrismaStore from '$lib/server/prismaSession';
 import KvStore from 'svelte-kit-connect-cloudflare-kv';
 import { sveltekitSessionHandle } from 'svelte-kit-sessions';
 
