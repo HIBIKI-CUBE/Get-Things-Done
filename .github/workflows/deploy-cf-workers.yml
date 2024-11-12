@@ -18,6 +18,8 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          secrets: SESSION_SECRET2
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          secrets: |
+            SESSION_SECRET
         env:
-          SESSION_SECRET3: ${{ secrets.SESSION_SECRET4 }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
