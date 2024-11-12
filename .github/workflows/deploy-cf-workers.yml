@@ -19,7 +19,3 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          secrets: |
-            SESSION_SECRET
-        env:
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
