@@ -1,4 +1,5 @@
 import type { Handle } from '@sveltejs/kit';
+import type { SessionData as OriginalSessionData } from 'svelte-kit-sessions';
 import { SESSION_SECRET } from '$env/static/private';
 import KvStore from 'svelte-kit-connect-cloudflare-kv';
 import { sveltekitSessionHandle } from 'svelte-kit-sessions';
@@ -8,6 +9,10 @@ declare module 'svelte-kit-sessions' {
     userId?: string;
     challenge?: string;
   }
+}
+
+declare module 'svelte-kit-connect-cloudflare-kv' {
+  interface SessionData extends OriginalSessionData{}
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
