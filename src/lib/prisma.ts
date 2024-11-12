@@ -1,9 +1,11 @@
-import process from 'node:process';
+import { env } from '$env/dynamic/private';
+import { PrismaD1 } from '@prisma/adapter-d1';
 import { PrismaClient } from '@prisma/client';
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
+export interface Env {
+  // This must match the binding name defined in your wrangler.toml configuration
+  DB: D1Database;
+}
 
-export const prisma = globalForPrisma.prisma || new PrismaClient();
-
-if (process.env.VERCEL_ENV !== 'production')
-  globalForPrisma.prisma = prisma;
+const adapter = new PrismaD1(env.DB as D1Database);
+export const prisma = new PrismaClient({ adapter });

@@ -9,7 +9,7 @@
     if (username === '') {
       return;
     }
-    const { options }: { options: PublicKeyCredentialCreationOptionsJSON | null } = await (await fetch(`/api/auth/register`, {
+    const { options } = await (await fetch(`/api/auth/register`, {
       method: 'POST',
       body: JSON.stringify({ username }),
       credentials: 'same-origin',
@@ -18,7 +18,7 @@
       },
     })).json().catch((err) => {
       console.error(err);
-    });
+    }) as { options: PublicKeyCredentialCreationOptionsJSON | null };
     if (!options)
       return;
     const registrationResponse = await startRegistration({ optionsJSON: options });

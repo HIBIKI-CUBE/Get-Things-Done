@@ -19,17 +19,20 @@
     "test:unit": "vitest"
   },
   "dependencies": {
+    "@prisma/adapter-d1": "^5.22.0",
     "svelte-kit-sessions": "^0.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
     "@auth/prisma-adapter": "^2.7.3",
     "@auth/sveltekit": "^1.7.3",
+    "@cloudflare/workers-types": "^4.20241106.0",
     "@playwright/test": "^1.48.2",
     "@prisma/client": "^5.22.0",
     "@simplewebauthn/browser": "11.0.0",
     "@simplewebauthn/server": "11.0.0",
     "@sveltejs/adapter-auto": "^3.3.1",
+    "@sveltejs/adapter-cloudflare-workers": "^2.5.6",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "eslint": "^9.14.0",
@@ -43,8 +46,10 @@
     "svelte": "^5.1.13",
     "svelte-check": "^4.0.6",
     "svelte-eslint-parser": "^0.43.0",
+    "svelte-kit-connect-cloudflare-kv": "^0.1.0",
     "typescript": "~5.6.3",
     "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "wrangler": "^3.86.0"
   }
 }

@@ -41,7 +41,7 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
         credential: {
           id: passkey.id,
           publicKey: passkey.public_key,
-          counter: passkey.counter.toNumber(),
+          counter: passkey.counter,
           transports: passkey.transports?.split(',') as AuthenticatorTransportFuture[],
         },
       });
