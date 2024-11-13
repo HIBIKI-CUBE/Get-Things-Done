@@ -1,8 +1,9 @@
 # :schema node_modules/wrangler/config-schema.json
-name = "get-things-done"
+name = "get-things-done-dev"
 compatibility_date = "2024-11-06"
 # pages_build_output_dir = ".svelte-kit/cloudflare"
 main = "./.cloudflare/worker.js"
+workers_dev = false
 
 site.bucket = "./.cloudflare/public"
 
@@ -10,15 +11,9 @@ build.command = "bun run build"
 
 compatibility_flags = [ "nodejs_compat" ]
 
-# wrangler.toml (wrangler v3.79.0^)
 [observability]
 enabled = true
 head_sampling_rate = 1
-
-[[d1_databases]]
-binding = "DB"
-database_name = "get-things-done"
-database_id = "306ca8ef-80ae-44e5-8cee-7cc9c82f478a"
 
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Pages Function, running it closer to your back-end infrastructure
@@ -27,74 +22,50 @@ database_id = "306ca8ef-80ae-44e5-8cee-7cc9c82f478a"
 [placement]
 mode = "smart"
 
-# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
-# Docs:
-# - https://developers.cloudflare.com/pages/functions/bindings/#environment-variables
-# Note: Use secrets to store sensitive data.
-# - https://developers.cloudflare.com/pages/functions/bindings/#secrets
+# ####### DEV environment config ########
+[route]
+pattern = "dev.get-things-done.app"
+custom_domain = true
 
-# Bind the Workers AI model catalog. Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#workers-ai
-# [ai]
-# binding = "AI"
+[[d1_databases]]
+binding = "DB"
+database_name = "dev.get-things-done"
+database_id = "11b5ed69-836e-4d8e-a86d-39ba95a55550"
 
-# Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#d1-databases
-# [[d1_databases]]
-# binding = "MY_DB"
-# database_name = "my-database"
-# database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-
-# Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
-# Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.
-# Docs: https://developers.cloudflare.com/workers/runtime-apis/durable-objects
-# [[durable_objects.bindings]]
-# name = "MY_DURABLE_OBJECT"
-# class_name = "MyDurableObject"
-# script_name = 'my-durable-object'
-
-# Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#kv-namespaces
 [[kv_namespaces]]
 binding = "session"
-id = "db5f1e91a6e04562b78e2946de4b862e"
-
-# Bind a Queue producer. Use this binding to schedule an arbitrary task that may be processed later by a Queue consumer.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#queue-producers
-# [[queues.producers]]
-# binding = "MY_QUEUE"
-# queue = "my-queue"
-
-# Bind an R2 Bucket. Use R2 to store arbitrarily large blobs of data, such as files.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#r2-buckets
-# [[r2_buckets]]
-# binding = "MY_BUCKET"
-# bucket_name = "my-bucket"
-
-# Bind another Worker service. Use this binding to call another Worker without network overhead.
-# Docs: https://developers.cloudflare.com/pages/functions/bindings/#service-bindings
-# [[services]]
-# binding = "MY_SERVICE"
-# service = "my-service"
-
-# To use different bindings for preview and production environments, follow the examples below.
-# When using environment-specific overrides for bindings, ALL bindings must be specified on a per-environment basis.
-# Docs: https://developers.cloudflare.com/pages/functions/wrangler-configuration#environment-specific-overrides
+id = "db829708b9ca408ba101569b9eb670f5"
 
 # ####### PREVIEW environment config ########
+[env.next]
+name = "get-things-done-next"
 
-# [env.preview.vars]
-# API_KEY = "xyz789"
+[env.next.route]
+pattern = "next.get-things-done.app"
+custom_domain = true
 
-# [[env.preview.kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "<PREVIEW_NAMESPACE_ID>"
+[[env.next.d1_databases]]
+binding = "DB"
+database_name = "next.get-things-done"
+database_id = "4460981c-d938-4be5-8e81-fa5f662fb50d"
+
+[[env.next.kv_namespaces]]
+binding = "session"
+id = "29c78a613ba74a8fa30ac1188ea2a295"
 
 # ####### PRODUCTION environment config ########
+[env.prod]
+name = "get-things-done"
 
-# [env.production.vars]
-# API_KEY = "abc123"
+[env.prod.route]
+pattern = "get-things-done.app"
+custom_domain = true
 
-# [[env.production.kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "<PRODUCTION_NAMESPACE_ID>"
+[[env.prod.d1_databases]]
+binding = "DB"
+database_name = "get-things-done"
+database_id = "306ca8ef-80ae-44e5-8cee-7cc9c82f478a"
+
+[[env.prod.kv_namespaces]]
+binding = "session"
+id = "db5f1e91a6e04562b78e2946de4b862e"
