@@ -46,7 +46,7 @@ jobs:
             SESSION_SECRET
         env:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-  deploy_dev:
+  deploy_prod:
     runs-on: ubuntu-latest
     name: Deploy Prod
     if: github.ref_name == 'main'
