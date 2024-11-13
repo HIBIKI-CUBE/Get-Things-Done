@@ -44,6 +44,7 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           secrets: |
             SESSION_SECRET
+          environment: 'next'
         env:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
   deploy_prod:
@@ -63,5 +64,6 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           secrets: |
             SESSION_SECRET
+          environment: 'prod'
         env:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
