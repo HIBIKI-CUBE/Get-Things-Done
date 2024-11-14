@@ -3,12 +3,16 @@ name: Deploy
 on:
   push:
     branches:
+      - develop
+      - next
       - main
 
 jobs:
-  deploy:
+  deploy_dev:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy Dev
+    if: github.ref_name == 'develop'
+    environment: dev
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -21,5 +25,45 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           secrets: |
             SESSION_SECRET
+        env:
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  deploy_next:
+    runs-on: ubuntu-latest
+    name: Deploy Next
+    if: github.ref_name == 'next'
+    environment: next
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          secrets: |
+            SESSION_SECRET
+          environment: 'next'
+        env:
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  deploy_prod:
+    runs-on: ubuntu-latest
+    name: Deploy Prod
+    if: github.ref_name == 'main'
+    environment: prod
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          secrets: |
+            SESSION_SECRET
+          environment: 'prod'
         env:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
