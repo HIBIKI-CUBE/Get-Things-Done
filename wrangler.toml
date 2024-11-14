@@ -27,6 +27,9 @@ mode = "smart"
 pattern = "dev.get-things-done.app"
 custom_domain = true
 
+[vars]
+RPID = "dev.get-things-done.app"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "dev.get-things-done"
@@ -44,6 +47,9 @@ name = "get-things-done-next"
 pattern = "next.get-things-done.app"
 custom_domain = true
 
+[env.next.vars]
+RPID = "next.get-things-done.app"
+
 [[env.next.d1_databases]]
 binding = "DB"
 database_name = "next.get-things-done"
@@ -60,6 +66,9 @@ name = "get-things-done"
 [env.prod.route]
 pattern = "get-things-done.app"
 custom_domain = true
+
+[env.prod.vars]
+RPID = "get-things-done.app"
 
 [[env.prod.d1_databases]]
 binding = "DB"
