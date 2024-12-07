@@ -1,6 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { User } from '@prisma/client';
+import type { users } from '$lib/db/schema';
+import type { InferSelectModel } from 'drizzle-orm';
 
 // for information about these interfaces
 declare global {
@@ -8,7 +9,7 @@ declare global {
     // interface Error {}
     // interface Locals {}
     interface PageData {
-      user: User | undefined;
+      user: InferSelectModel<typeof users> | undefined;
     }
     // interface PageState {}
     // interface Platform {}

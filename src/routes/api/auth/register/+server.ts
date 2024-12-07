@@ -1,15 +1,17 @@
 import type { PublicKeyCredentialCreationOptionsJSON } from '@simplewebauthn/types';
 import type { RequestHandler } from './$types';
-import { prisma } from '$lib/prisma';
+import { users } from '$lib/db/schema';
+import { db } from '$lib/drizzle';
 import { rpID, rpName } from '$lib/server/webAuthnConsts';
 import { generateRegistrationOptions } from '@simplewebauthn/server';
 import { error, json } from '@sveltejs/kit';
 
 export const POST: RequestHandler = async ({ request, locals: { session } }) => {
-  const userName: string | null = (await request.json()).username;
+  const body: { username?: string } = await request.json();
+  const userName = body.username;
   if (!userName)
     return error(400, 'Parameter missing');
-  const user = await prisma.user.create({ data: { name: userName } });
+  const [user] = await db.insert(users).values({ name: userName }).returning();
 
   const options: PublicKeyCredentialCreationOptionsJSON = await generateRegistrationOptions({
     rpName,

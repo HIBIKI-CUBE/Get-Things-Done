@@ -1,4 +1,3 @@
-import { dev } from '$app/environment';
 import { env } from '$env/dynamic/private';
 
 export interface Env {
@@ -6,5 +5,7 @@ export interface Env {
 }
 
 export const rpName = 'Get Things Done' as const;
-export const rpID = dev ? 'localhost' : env.RPID;
-export const origin = dev ? `http://${rpID}:5173` : `https://${rpID}` as const;
+export const rpID = env.RPID ?? 'localhost';
+export const origin =  rpID === 'localhost'
+    ? `http://${rpID}:8787`
+    : `https://${rpID}` as const;
