@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
-    "build": "prisma generate && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "npm run test:integration && npm run test:unit",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -19,26 +19,24 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@prisma/adapter-d1": "^5.22.0",
     "svelte-kit-sessions": "^0.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
-    "@auth/prisma-adapter": "^2.7.3",
-    "@auth/sveltekit": "^1.7.3",
     "@cloudflare/workers-types": "^4.20241106.0",
+    "@paralleldrive/cuid2": "^2.2.2",
     "@playwright/test": "^1.48.2",
-    "@prisma/client": "^5.22.0",
     "@simplewebauthn/browser": "11.0.0",
     "@simplewebauthn/server": "11.0.0",
     "@sveltejs/adapter-auto": "^3.3.1",
     "@sveltejs/adapter-cloudflare-workers": "^2.5.6",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "drizzle-kit": "^0.29.1",
+    "drizzle-orm": "^0.37.0",
     "eslint": "^9.14.0",
     "eslint-plugin-svelte": "^2.46.0",
     "postcss-html": "^1.7.0",
-    "prisma": "^5.22.0",
     "stylelint": "^16.10.0",
     "stylelint-config-html": "^1.1.0",
     "stylelint-config-recess-order": "^5.1.1",
