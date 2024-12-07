@@ -35,6 +35,8 @@
     "@sveltejs/adapter-cloudflare-workers": "^2.5.6",
     "@sveltejs/kit": "^2.8.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
+    "drizzle-kit": "^0.29.1",
+    "drizzle-orm": "^0.37.0",
     "eslint": "^9.14.0",
     "eslint-plugin-svelte": "^2.46.0",
     "postcss-html": "^1.7.0",
