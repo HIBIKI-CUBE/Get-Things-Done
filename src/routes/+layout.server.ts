@@ -1,5 +1,5 @@
 import type { LayoutServerLoad } from './$types';
-import { prisma } from '$lib/prisma';
+import { db } from '$lib/drizzle';
 
 export const load: LayoutServerLoad = async ({ locals: { session } }) => {
   const { userId } = session.data;
@@ -8,13 +8,10 @@ export const load: LayoutServerLoad = async ({ locals: { session } }) => {
       user: undefined,
     };
   }
-  const user = await prisma.user.findUnique({
-    where: {
-      id: session.data.userId,
-    },
+
+  const user = await db.query.users.findFirst({
+    where: ({ id }, { eq }) => eq(id, userId),
   });
 
-  return {
-    user: user ?? undefined,
-  };
+  return { user };
 };
