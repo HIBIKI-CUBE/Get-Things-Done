@@ -7,5 +7,5 @@ export interface Env {
   DB: D1Database;
 }
 
-const adapter = new PrismaD1(env.DB as D1Database);
+const adapter = new PrismaD1(env.DB as unknown as D1Database);
 export const prisma = new PrismaClient({ adapter });
