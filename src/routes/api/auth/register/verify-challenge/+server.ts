@@ -1,7 +1,8 @@
 import type { RegistrationResponseJSON } from '@simplewebauthn/types';
 import type { RequestHandler } from './$types';
 import { Buffer } from 'node:buffer';
-import { prisma } from '$lib/prisma';
+import { passkeys } from '$lib/db/schema';
+import { db } from '$lib/drizzle';
 import { origin, rpID } from '$lib/server/webAuthnConsts';
 import { verifyRegistrationResponse } from '@simplewebauthn/server';
 import { json } from '@sveltejs/kit';
@@ -33,10 +34,8 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
   const { verified } = verification;
   const { registrationInfo } = verification;
 
-  const user = await prisma.user.findFirst({
-    where: {
-      id: session.data.userId,
-    },
+  const user = await db.query.users.findFirst({
+    where: ({ id }, { eq }) => eq(id, session.data.userId ?? ''),
   });
 
   if (verified && registrationInfo && user) {
@@ -46,8 +45,8 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
       credentialBackedUp,
     } = registrationInfo;
 
-    await prisma.passkey.create({
-      data: {
+    await db.insert(passkeys)
+      .values({
         user_id: user.id,
         webauthn_user_id: user.id,
         id: credential.id,
@@ -56,8 +55,7 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
         transports: credential.transports?.join(',') ?? null,
         device_type: credentialDeviceType,
         backed_up: credentialBackedUp,
-      },
-    });
+      });
 
     session.cookie.path = '/';
     await session.setData({ userId: user.id });

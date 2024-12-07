@@ -1,16 +1,17 @@
 <script lang='ts'>
-  import type { User } from '@prisma/client';
   import type { VerifiedRegistrationResponse } from '@simplewebauthn/server';
   import type { PublicKeyCredentialRequestOptionsJSON } from '@simplewebauthn/types';
+  import type { InferSelectModel } from 'drizzle-orm';
   import { invalidateAll } from '$app/navigation';
+  import { users } from '$lib/db/schema';
   import { startAuthentication } from '@simplewebauthn/browser';
 
-  const { user }: { user: User | undefined } = $props();
+  const { user }: { user: InferSelectModel<typeof users> | undefined } = $props();
 
   async function login() {
-    const { options }: { options: PublicKeyCredentialRequestOptionsJSON | null } = await (await fetch(`/api/auth/login`)).json().catch((err) => {
+    const { options } = await (await fetch(`/api/auth/login`)).json().catch((err) => {
       console.error(err);
-    });
+    }) as { options: PublicKeyCredentialRequestOptionsJSON | null };
     if (!options)
       return;
     const authenticationResponse = await startAuthentication({
