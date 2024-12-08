@@ -12,7 +12,7 @@ declare module 'svelte-kit-sessions' {
 }
 
 declare module 'svelte-kit-connect-cloudflare-kv' {
-  interface SessionData extends OriginalSessionData{}
+  interface SessionData extends OriginalSessionData {}
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
