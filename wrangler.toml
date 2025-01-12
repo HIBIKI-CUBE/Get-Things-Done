@@ -22,6 +22,23 @@ head_sampling_rate = 1
 [placement]
 mode = "smart"
 
+[route]
+pattern = "local.get-things-done.app"
+custom_domain = true
+
+[vars]
+RPID = "local.get-things-done.app"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "local.get-things-done"
+database_id = "2d971e2f-b583-4b50-8c2e-15ec8364f5e4"
+
+[[kv_namespaces]]
+binding = "session"
+id = "a8524cca1e3948a687a7a07aaf1c1586"
+preview_id = "557cff7756c5461db01faa6a9a4d7131"
+
 # ####### DEV environment config ########
 [env.dev]
 name = "get-things-done-dev"
