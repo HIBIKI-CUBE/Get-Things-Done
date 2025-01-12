@@ -1,5 +1,5 @@
 # :schema node_modules/wrangler/config-schema.json
-name = "get-things-done-dev"
+name = "get-things-done-local"
 compatibility_date = "2024-11-06"
 # pages_build_output_dir = ".svelte-kit/cloudflare"
 main = "./.cloudflare/worker.js"
@@ -22,25 +22,30 @@ head_sampling_rate = 1
 [placement]
 mode = "smart"
 
-[[mtls_certificates]]
-binding = "CERT"
-certificate_id = "08c77e7f-2699-4732-80bb-b551c0d0b6e2"
-
 # ####### DEV environment config ########
-[route]
+[env.dev]
+name = "get-things-done-dev"
+
+[env.dev.route]
 pattern = "dev.get-things-done.app"
 custom_domain = true
 
-[vars]
+[[env.dev.mtls_certificates]]
+binding = "CERT"
+certificate_id = "08c77e7f-2699-4732-80bb-b551c0d0b6e2"
+
+[env.dev.vars]
 RPID = "dev.get-things-done.app"
 
-[[d1_databases]]
+[[env.dev.d1_databases]]
 binding = "DB"
 database_name = "dev.get-things-done"
 database_id = "11b5ed69-836e-4d8e-a86d-39ba95a55550"
+preview_database_id = "DB"
 
-[[kv_namespaces]]
+[[env.dev.kv_namespaces]]
 binding = "session"
+preview_id = "72a264f61cdc4f75bdb8b2af21974860"
 id = "db829708b9ca408ba101569b9eb670f5"
 
 # ####### PREVIEW environment config ########
@@ -50,6 +55,10 @@ name = "get-things-done-next"
 [env.next.route]
 pattern = "next.get-things-done.app"
 custom_domain = true
+
+[[env.next.mtls_certificates]]
+binding = "CERT"
+certificate_id = "08c77e7f-2699-4732-80bb-b551c0d0b6e2"
 
 [env.next.vars]
 RPID = "next.get-things-done.app"
