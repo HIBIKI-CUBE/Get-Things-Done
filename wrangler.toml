@@ -22,6 +22,10 @@ head_sampling_rate = 1
 [placement]
 mode = "smart"
 
+[[mtls_certificates]]
+binding = "CERT"
+certificate_id = "08c77e7f-2699-4732-80bb-b551c0d0b6e2"
+
 # ####### DEV environment config ########
 [route]
 pattern = "dev.get-things-done.app"
