@@ -47,5 +47,5 @@
   <label>ユーザー名
     <input type='text' required autocomplete='username webauthn' bind:value={username}>
   </label>
-  <button onclick={createPasskey}>登録</button>
+  <button onclick={createPasskey} disabled={username === ''}>登録</button>
 </form>

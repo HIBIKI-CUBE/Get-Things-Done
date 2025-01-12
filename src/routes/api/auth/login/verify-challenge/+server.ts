@@ -12,8 +12,8 @@ export const POST: RequestHandler = async ({ request, locals: { session } }) => 
   const expectedChallenge = session.data.challenge;
 
   const passkey = await db.query.passkeys.findFirst({
-    where: ({ id }, { eq }) => eq(id, response.id)
-  })
+    where: ({ id }, { eq }) => eq(id, response.id),
+  });
 
   if (!expectedChallenge || !passkey)
     return json({ error: 'challenge or user not found' }, { status: 400, statusText: 'Bad Request' });
